@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Pay App</title>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #97004f;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --border-radius: 15px;
+            --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            --icon-sm: 1.2rem;
+            --icon-md: 1.5rem;
+            --icon-lg: 2rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fb, #e4e8f0);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+        
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        /* Header Styles */
+        .app-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .app-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .app-header h1 i {
+            font-size: var(--icon-md);
+            margin-right: 12px;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            margin-left: 12px;
+            object-fit: cover;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            padding: 25px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+            background: #c0392b;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background: #7a003d;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .nav-item i {
+            font-size: var(--icon-sm);
+            margin-bottom: 6px;
+        }
+        
+        .nav-item.active {
+            color: var(--secondary);
+        }
+        
+        /* Settings Section Styles */
+        .settings-section {
+            margin-bottom: 30px;
+        }
+        
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+        }
+        
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-complete {
+            background: #e8f5e9;
+            color: var(--success);
+        }
+        
+        .status-pending {
+            background: #fff8e1;
+            color: var(--warning);
+        }
+        
+        .status-incomplete {
+            background: #ffebee;
+            color: var(--accent);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        /* Bank Card */
+        .bank-card {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bank-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .bank-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .bank-card-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .bank-card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            border-radius: 5px;
+        }
+        
+        .bank-card-number {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .bank-card-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .bank-card-detail {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bank-card-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .bank-card-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Verification Progress */
+        .progress-container {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .progress-percent {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+            width: 75%; /* Adjust based on actual progress */
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .app-container {
+                max-width: 100%;
+            }
+            
+            .app-header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .user-profile img {
+                width: 42px;
+                height: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <h1><i class="bi bi-gear"></i> Store Settings</h1>
+            <div class="user-profile">
+                <span style="font-size: 0.95rem; font-weight: 500;">The Puzzle Store</span>
+                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Business Profile">
+            </div>
+        </div>
+        
+        <!-- Store Settings Page -->
+        <div class="main-content">
+            <!-- Shop Details Section -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Shop Details</span>
+                    <i class="bi bi-shop"></i>
+                </div>
+                <div class="card-body">
+                    <div class="settings-section">
+                        <div class="settings-item">
+                            <span>Shop Name</span>
+                            <span style="font-weight: 600; color: var(--secondary);">The Puzzle Store</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Business Type</span>
+                            <span style="font-weight: 600;">Retail</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Business ID</span>
+                            <span style="font-weight: 600;">BST785934</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Registered On</span>
+                            <span style="font-weight: 600;">12 May 2022</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>GSTIN</span>
+                            <span style="font-weight: 600;">27ABCDE1234F1Z5</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Address</span>
+                            <span style="font-weight: 600; text-align: right;">123 Retail Street,<br>Mumbai, Maharashtra 400001</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        <i class="bi bi-pencil"></i> Edit Shop Details
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bank Details Section -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Bank Account</span>
+                    <i class="bi bi-bank"></i>
+                </div>
+                <div class="card-body">
+                    <!-- Bank Card -->
+                    <div class="bank-card">
+                        <div class="bank-card-header">
+                            <div class="bank-card-name">THE PUZZLE STORE</div>
+                            <div class="bank-card-chip"></div>
+                        </div>
+                        <div class="bank-card-number">XXXX XXXX XXXX 5678</div>
+                        <div class="bank-card-footer">
+                            <div class="bank-card-detail">
+                                <span class="bank-card-label">Account Holder</span>
+                                <span class="bank-card-value">THE PUZZLE STORE</span>
+                            </div>
+                            <div class="bank-card-detail">
+                                <span class="bank-card-label">Valid Thru</span>
+                                <span class="bank-card-value">05/27</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <div class="settings-item">
+                            <span>Bank Name</span>
+                            <span style="font-weight: 600;">State Bank of India</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Account Number</span>
+                            <span style="font-weight: 600;">XXXXXXX5678</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>IFSC Code</span>
+                            <span style="font-weight: 600;">SBIN0001234</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Account Type</span>
+                            <span style="font-weight: 600;">Current Account</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Linked UPI ID</span>
+                            <span style="font-weight: 600;">thepuzzlestore@sbi</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        <i class="bi bi-credit-card"></i> Manage Bank Account
+                    </a>
+                </div>
+            </div>
+            
+            <!-- KYC Verification Section -->
+            <div class="card">
+                <div class="card-header">
+                    <span>KYC Verification</span>
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <div class="card-body">
+                    <!-- Verification Progress -->
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <span class="progress-title">Verification Status</span>
+                            <span class="progress-percent">75% Complete</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-section">
+                        <div class="settings-item">
+                            <span>PAN Verification</span>
+                            <span class="status-badge status-complete">Verified</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Aadhaar Verification</span>
+                            <span class="status-badge status-complete">Verified</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Bank Account Verification</span>
+                            <span class="status-badge status-complete">Verified</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Business Address Proof</span>
+                            <span class="status-badge status-pending">Pending</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>GST Verification</span>
+                            <span class="status-badge status-incomplete">Incomplete</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        <i class="bi bi-shield-check"></i> Complete KYC Verification
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Security Settings Section -->
+            <div class="card">
+                <div class="card-header">
+                    <span>Security Settings</span>
+                    <i class="bi bi-lock"></i>
+                </div>
+                <div class="card-body">
+                    <div class="settings-section">
+                        <div class="settings-item">
+                            <span>Login Password</span>
+                            <span style="font-weight: 600; color: var(--secondary);">••••••••</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Transaction PIN</span>
+                            <span style="font-weight: 600; color: var(--secondary);">••••</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>Biometric Login</span>
+                            <span style="font-weight: 600; color: var(--success);">Enabled</span>
+                        </div>
+                        <div class="settings-item">
+                            <span>2-Factor Authentication</span>
+                            <span style="font-weight: 600; color: var(--accent);">Disabled</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        <i class="bi bi-lock"></i> Security Settings
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Logout Button -->
+            <a href="#" class="btn btn-outline" style="width: 100%; text-align: center;">
+                <i class="bi bi-box-arrow-right"></i> Log Out
+            </a>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="business.html" class="nav-item">
+                <i class="bi bi-house-door"></i>
+                <span>Home</span>
+            </a>
+            <a href="mybusiness.html" class="nav-item">
+                <i class="bi bi-briefcase"></i>
+                <span>My Business</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <i class="bi bi-gear"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

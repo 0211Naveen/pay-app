@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayApp - Profile</title>
+
+    <!-- Bootstrap Local CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary: #6366ff;
+            --secondary: #4A40E5;
+            --accent: #FF6B6B;
+            --light: #F8F9FA;
+            --dark: #2D3436;
+            --success: #00B894;
+            --warning: #FDCB6E;
+            --info: #0984E3;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --card-shadow: 0 10px 20px rgba(108, 99, 255, 0.15);
+            --section-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px 20px 30px;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .app-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .app-name {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+     
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin: 0 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-avatar i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .profile-id {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3px;
+        }
+        
+        .profile-username {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .profile-qr {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* margin-left: 15px; */
+        }
+        
+        .profile-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .content-area {
+            padding: 0 20px;
+            margin-top: -15px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--section-shadow);
+        }
+        
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title span {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .view-more {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .bank-account {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .bank-account:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bank-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .bank-details {
+            flex: 1;
+        }
+        
+        .bank-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .account-number {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .account-type {
+            font-size: 0.75rem;
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .add-bank {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px dashed #ddd;
+        }
+        
+        .add-bank:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .add-bank i {
+            margin-right: 10px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:hover {
+            background: #f9f9f9;
+            padding-left: 20px;
+        }
+        
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .menu-text {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .menu-arrow {
+            color: #ccc;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+        }
+        
+        .security-badge {
+            background: rgba(0, 184, 148, 0.1);
+            color: #00B894;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="app-bar">
+                <div class="app-name">PayApp</div>
+                <div>
+                    <i class="bi bi-bell"></i>
+                </div>
+            </div>
+            
+            <div class="profile-header">
+               
+                <div class="profile-info">
+                    <div class="profile-name">Naveen</div>
+                    <div class="profile-id">802859334</div>
+                    <div class="profile-username">UPI: Naveen0211@ok</div>
+                </div>
+                <div class="profile-qr">
+                    <i class="bi bi-qr-code-scan" style="font-size: 1.8rem; color: var(--primary);"></i>
+                </div>
+                 <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Profile">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Bank Accounts Section -->
+            <div class="section">
+                <div class="section-title">
+                    <span>Bank Accounts</span>
+                    <a href="#" class="view-more">Manage</a>
+                </div>
+                
+                <div class="bank-account">
+                    <div class="bank-icon">
+                        <i class="bi bi-bank"></i>
+                    </div>
+                    <div class="bank-details">
+                        <div class="bank-name">State Bank of India</div>
+                        <div class="account-number">0782 0581 ••••</div>
+                        <span class="account-type">Primary</span>
+                    </div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="bank-account">
+                    <div class="bank-icon">
+                        <i class="bi bi-bank"></i>
+                    </div>
+                    <div class="bank-details">
+                        <div class="bank-name">HDFC Bank</div>
+                        <div class="account-number">1066 •••• ••••</div>
+                        <span class="account-type">Savings</span>
+                    </div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="add-bank">
+                    <i class="bi bi-plus-circle"></i> Add another bank account
+                </div>
+            </div>
+            
+            <!-- Account Settings Section -->
+            <div class="section">
+                <div class="section-title">
+                    <span>Account Settings</span>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <div class="menu-text">Personal Information</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <div class="menu-text">Security</div>
+                    <div class="security-badge">Protected</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-translate"></i>
+                    </div>
+                    <div class="menu-text">Language</div>
+                    <div class="menu-text" style="flex: 0; color: #888; font-size: 0.9rem;">English</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-bell"></i>
+                    </div>
+                    <div class="menu-text">Notifications</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Support Section -->
+            <div class="section">
+                <div class="section-title">
+                    <span>Support</span>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-question-circle"></i>
+                    </div>
+                    <div class="menu-text">Help & Feedback</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div class="menu-text">Privacy Policy</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-file-text"></i>
+                    </div>
+                    <div class="menu-text">Terms of Service</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">
+                        <i class="bi bi-info-circle"></i>
+                    </div>
+                    <div class="menu-text">About PayApp</div>
+                    <div class="badge">v2.3.1</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Invite Friends Section -->
+            <div class="section">
+                <div class="section-title">
+                    <span>Invite Friends</span>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon" style="background: rgba(255, 107, 107, 0.1); color: var(--accent);">
+                        <i class="bi bi-gift"></i>
+                    </div>
+                    <div class="menu-text">Get ₹100 for each friend</div>
+                    <div class="menu-arrow">
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Logout Button -->
+            <!-- <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+            </div> -->
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="window.location.href='home.html'">
+                <div class="nav-icon"><i class="bi bi-house"></i></div>
+                <small>Home</small>
+            </div>
+            <div class="nav-item" onclick="window.location.href='transaction.html'">
+                <div class="nav-icon"><i class="bi bi-arrow-left-right"></i></div>
+                <small>Transactions</small>
+            </div>
+            <div class="nav-item active" onclick="window.location.href='profile.html'">
+                <div class="nav-icon"><i class="bi bi-person"></i></div>
+                <small>Profile</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Local JS -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+ 
+</body>
+</html>
